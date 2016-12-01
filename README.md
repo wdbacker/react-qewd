@@ -14,8 +14,8 @@ Thanks to [Rob Tweed](https://github.com/robtweed) for providing the `ewd-xpress
 ## License
 
  Copyright (c) 2016 Stabe nv,
- Hofstade, Oost-Vlaanderen, BE.
- All rights reserved.
+ Hofstade, Oost-Vlaanderen, BE
+ All rights reserved
 
   E-mail: <ward.debacker@gmail.com>
 
