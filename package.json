@@ -1,6 +1,6 @@
 {
   "name": "react-ewd",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "React/Redux client module for ewd-xpress",
   "main": "lib/index.js",
   "jsnext:main": "es/index.js",
