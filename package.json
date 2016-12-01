@@ -1,6 +1,6 @@
 {
   "name": "react-ewd",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "React/Redux client module for ewd-xpress",
   "main": "lib/index.js",
   "jsnext:main": "es/index.js",
@@ -11,6 +11,18 @@
     "dist"
   ],
   "scripts": {
+    "clean": "rimraf lib dist es",
+    "build": "npm run build:commonjs && npm run build:umd && npm run build:umd:min && npm run build:es",
+    "prepublish": "npm run clean && npm run test && npm run build",
+    "posttest": "npm run lint",
+    "lint": "eslint src test",
+    "test": "cross-env BABEL_ENV=commonjs mocha --compilers js:babel-core/register --reporter spec test/*.js",
+    "build:commonjs": "cross-env BABEL_ENV=commonjs babel src --out-dir lib",
+    "build:es": "cross-env BABEL_ENV=es babel src --out-dir es",
+    "build:umd": "cross-env BABEL_ENV=commonjs NODE_ENV=development webpack",
+    "build:umd:min": "cross-env BABEL_ENV=commonjs NODE_ENV=production webpack"
+  },
+  "xxx-scripts": {
     "clean": "rimraf lib dist es",
     "build": "npm run build:commonjs && npm run build:es",
     "prepublish": "npm run clean && npm run build",
@@ -71,7 +83,7 @@
     "rimraf": "^2.5.2",
     "webpack": "^1.12.14"
   },
-  "dependencies": {
+  "peerDependencies": {
     "ewd-client": "^1.9.0",
     "react": "^15.0.0"
   }

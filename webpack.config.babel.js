@@ -35,6 +35,13 @@ export default {
     './src/index',
   ],
 
+	externals: {
+		'jquery': '$',
+		'socket.io-client': 'io',
+		'react': 'React',
+		'ewd-client': 'EWD'
+	},
+	
   output: {
     path: path.join(__dirname, 'dist'),
     filename,
