@@ -1,6 +1,6 @@
 # react-ewd: React/Redux client module for [ewd-xpress](https://www.npmjs.com/package/ewd-xpress)
 
-Ward De Backer
+Ward De Backer, Stabe nv
 1 December 2016
 
 Twitter: [@wdbacker](https://twitter.com/wdbacker)
