@@ -1,7 +1,7 @@
 # react-ewd: React/Redux client module for [ewd-xpress](https://www.npmjs.com/package/ewd-xpress)
 
-Ward De Backer <ward.debacker@gmail.com>
-1 December 2016, Stabe nv
+Ward De Backer
+1 December 2016
 
 Twitter: [@wdbacker](https://twitter.com/wdbacker)
 
@@ -16,8 +16,6 @@ Thanks to [Rob Tweed](https://github.com/robtweed) for providing the `ewd-xpress
  Copyright (c) 2016 Stabe nv,
  Hofstade, Oost-Vlaanderen, BE
  All rights reserved
-
-  E-mail: <ward.debacker@gmail.com>
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
