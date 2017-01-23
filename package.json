@@ -1,7 +1,7 @@
 {
-  "name": "react-ewd",
-  "version": "1.0.3",
-  "description": "React/Redux client module for ewd-xpress",
+  "name": "react-qewd",
+  "version": "1.0.4",
+  "description": "React/Redux client module for QEWD",
   "main": "lib/index.js",
   "jsnext:main": "es/index.js",
   "files": [
@@ -34,10 +34,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/wdbacker/react-ewd.git"
+    "url": "git+https://github.com/wdbacker/react-qewd.git"
   },
   "keywords": [
-		"ewd",
+		"qewd",
     "react",
 		"redux",
 		"thunk",
@@ -46,9 +46,9 @@
   "author": "Ward De Backer <ward.debacker@gmail.com>",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/wdbacker/react-ewd/issues"
+    "url": "https://github.com/wdbacker/react-qewd/issues"
   },
-  "homepage": "https://github.com/wdbacker/react-ewd#readme",
+  "homepage": "https://github.com/wdbacker/react-qewd#readme",
   "devDependencies": {
     "babel-cli": "^6.6.5",
     "babel-core": "^6.6.5",
