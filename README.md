@@ -1,4 +1,4 @@
-# react-ewd: React/Redux client module for [QEWD](https://www.npmjs.com/package/qewd)
+# react-qewd: React/Redux client module for [QEWD](https://www.npmjs.com/package/qewd)
 
 Interface module for writing [React](https://www.npmjs.com/package/react) applications with [qewd (QEWD)](https://www.npmjs.com/package/qewd) back-end. Exposes the [ewd-client](https://www.npmjs.com/package/ewd-client) as object, in React context and as property for use in your React components. 
 
