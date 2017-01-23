@@ -1,12 +1,12 @@
-# react-ewd: React/Redux client module for [ewd-xpress](https://www.npmjs.com/package/ewd-xpress)
+# react-ewd: React/Redux client module for [QEWD](https://www.npmjs.com/package/qewd)
 
-Interface module for writing [React](https://www.npmjs.com/package/react) applications with [ewd-xpress (EWD 3)](https://www.npmjs.com/package/ewd-xpress) back-end. Exposes the [ewd-client](https://www.npmjs.com/package/ewd-client) as object, in React context and as property for use in your React components. 
+Interface module for writing [React](https://www.npmjs.com/package/react) applications with [qewd (QEWD)](https://www.npmjs.com/package/qewd) back-end. Exposes the [ewd-client](https://www.npmjs.com/package/ewd-client) as object, in React context and as property for use in your React components. 
 
-Thanks to [Rob Tweed](https://github.com/robtweed) for providing the [ewd-xpress-react](https://www.npmjs.com/package/ewd-xpress-react) module this interface module code is based on.
+Thanks to [Rob Tweed](https://github.com/robtweed) for providing the [qewd-react](https://www.npmjs.com/package/qewd-react) module this interface module code is based on.
 
 ## Installing
 
-    npm install react-ewd
+    npm install react-qewd
 
 ## Use
 
@@ -17,10 +17,10 @@ import React from 'react';
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
-import { EWD, EWDProvider } from 'react-ewd';
+import { QEWD, QEWDProvider } from 'react-qewd';
 ...
-let ewd = EWD({
-  application: 'ewd-test-app', // application name
+let qewd = QEWD({
+  application: 'qewd-test-app', // application name
   log: true,
   url: 'http://localhost:8080',
   ajax: function(params, done, fail) {
@@ -29,7 +29,7 @@ let ewd = EWD({
 });
 
 // we instantiate this object to pass the EWD 3 client to the Redux action methods in actions/*.js
-let extraThunkArgument = { ewd };
+let extraThunkArgument = { qewd };
 
 /*
   instantiate the Redux store with thunk middleware, this allows to dispatch actions asynchronously
@@ -37,7 +37,7 @@ let extraThunkArgument = { ewd };
 */
 const store = createStore(reducers, compose(applyMiddleware(thunk.withExtraArgument(extraThunkArgument)), window.devToolsExtension ? window.devToolsExtension() : f => f));
 
-// main EWD 3 React container component (similar to the Top component in the ewd-xpress-react loader)
+// main QEWD React container component (similar to the Top component in the qewd-react loader)
 function ProviderContainer(props) {
   let styles = {
     MainDiv: { padding: 20 },
@@ -46,15 +46,15 @@ function ProviderContainer(props) {
 
   /*
     instantiate the Redux Provider with its store as property
-    before the connection to the EWD 3 server is registered, a waiting Spinner is shown
+    before the connection to the QEWD server is registered, a waiting Spinner is shown
     once the connection is registered, React renders our <App>
   */
   return (
     <Provider store={store}>
       <div style={styles.MainDiv}>
         {
-          props.ewdProviderState.registered ?
-            <App ewd={ewd} />
+          props.qewdProviderState.registered ?
+            <App qewd={qewd} />
           :
             <div style={styles.Spinner}>
               <Spinner />
@@ -67,12 +67,12 @@ function ProviderContainer(props) {
 
 /*
   main starting point of your React/Redux application
-  instantiates the EWDProvider component where the ewd client instance is passed in as a property (for use in your components)
+  instantiates the QEWDProvider component where the qewd client instance is passed in as a property (for use in your components)
 */
 render(
-  <EWDProvider ewd={ewd}>
+  <QEWDProvider qewd={qewd}>
     <ProviderContainer />
-  </EWDProvider>,
+  </QEWDProvider>,
   document.getElementById('content')
 );
 
