@@ -3,7 +3,7 @@
  ----------------------------------------------------------------------------
  | react-ewd: React/Redux client module for ewd-xpress                      |
  |                                                                          |
- | Copyright (c) 2016 Stabe nv,                                             |
+ | Copyright (c) 2017 Stabe nv,                                             |
  | Hofstade, Oost-Vlaanderen,                                               |
  | All rights reserved.                                                     |
  |                                                                          |
@@ -20,11 +20,12 @@
  |  limitations under the License.                                          |
  ----------------------------------------------------------------------------
 
-  1 December 2016
+  19 April 2017
 
 */
 
-import { Component, PropTypes, cloneElement } from 'react';
+import { Component, cloneElement } from 'react';
+import PropTypes from 'prop-types';
 import ewdClient from 'ewd-client';
 
 // create a QEWDProvider component for use in the main React component render()

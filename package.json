@@ -1,6 +1,6 @@
 {
   "name": "react-qewd",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "React/Redux client module for QEWD",
   "main": "lib/index.js",
   "jsnext:main": "es/index.js",
@@ -22,26 +22,16 @@
     "build:umd": "cross-env BABEL_ENV=commonjs NODE_ENV=development webpack",
     "build:umd:min": "cross-env BABEL_ENV=commonjs NODE_ENV=production webpack"
   },
-  "xxx-scripts": {
-    "clean": "rimraf lib dist es",
-    "build": "npm run build:commonjs && npm run build:es",
-    "prepublish": "npm run clean && npm run build",
-    "posttest": "npm run lint",
-    "lint": "eslint src test",
-    "test": "cross-env BABEL_ENV=commonjs mocha --compilers js:babel-core/register --reporter spec test/*.js",
-    "build:commonjs": "cross-env BABEL_ENV=commonjs babel src --out-dir lib",
-    "build:es": "cross-env BABEL_ENV=es babel src --out-dir es"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/wdbacker/react-qewd.git"
   },
   "keywords": [
-		"qewd",
+    "qewd",
     "react",
-		"redux",
-		"thunk",
-		"flux"
+    "redux",
+    "thunk",
+    "flux"
   ],
   "author": "Ward De Backer <ward.debacker@gmail.com>",
   "license": "Apache-2.0",
@@ -83,8 +73,9 @@
     "rimraf": "^2.5.2",
     "webpack": "^1.12.14"
   },
-  "peerDependencies": {
-    "ewd-client": "^1.9.0",
-    "react": "^15.0.0"
+  "dependencies": {
+    "ewd-client": "^1.14.1",
+    "prop-types": "^15.5.8",
+    "react": "^15.5.4"
   }
 }
