@@ -1,6 +1,8 @@
 # react-qewd: React/Redux client module for [QEWD](https://www.npmjs.com/package/qewd)
 
-Interface module for writing [React](https://www.npmjs.com/package/react) applications with [qewd (QEWD)](https://www.npmjs.com/package/qewd) back-end. Exposes the [ewd-client](https://www.npmjs.com/package/ewd-client) as object, in React context and as property for use in your React components. 
+Interface module for writing [React](https://www.npmjs.com/package/react) applications with [qewd (QEWD)](https://www.npmjs.com/package/qewd) back-end. Exposes the [ewd-client](https://www.npmjs.com/package/ewd-client) as object, in React context and as property for use in your React components.
+
+A similar Vue.js module [vue-qewd](https://www.npmjs.com/package/vue-qewd) also exists.
 
 [QEWD](http://qewdjs.com/) is a unique web framework allowing you to concentrate on your application code, without worrying about system infrastructure, featuring:
 - a WebSockets server, allowing your application to connect via this `vue-qewd` module using [ewd-client](https://www.npmjs.com/package/ewd-client)
