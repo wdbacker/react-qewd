@@ -10,7 +10,7 @@ const plugins = [
   }),
 ];
 
-const filename = `react-ewd${NODE_ENV === 'production' ? '.min' : ''}.js`;
+const filename = `react-qewd${NODE_ENV === 'production' ? '.min' : ''}.js`;
 
 NODE_ENV === 'production'  && plugins.push(
   new webpack.optimize.UglifyJsPlugin({
@@ -39,13 +39,14 @@ export default {
 		'jquery': '$',
 		'socket.io-client': 'io',
 		'react': 'React',
+		'prop-types': 'React PropTypes',
 		'ewd-client': 'EWD'
 	},
 	
   output: {
     path: path.join(__dirname, 'dist'),
     filename,
-    library: 'ReactEWD',
+    library: 'ReactQEWD',
     libraryTarget: 'umd',
   },
 

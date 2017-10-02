@@ -2,6 +2,17 @@
 
 Interface module for writing [React](https://www.npmjs.com/package/react) applications with [qewd (QEWD)](https://www.npmjs.com/package/qewd) back-end. Exposes the [ewd-client](https://www.npmjs.com/package/ewd-client) as object, in React context and as property for use in your React components. 
 
+[QEWD](http://qewdjs.com/) is a unique web framework allowing you to concentrate on your application code, without worrying about system infrastructure, featuring:
+- a WebSockets server, allowing your application to connect via this `vue-qewd` module using [ewd-client](https://www.npmjs.com/package/ewd-client)
+- a (federating) REST server, to build your REST endpoints & allowing you to federate requests to other (chained) QEWD servers, featuring [Express](https://expressjs.com/) or [Koa](http://koajs.com/) as underlying frameworks
+- a microservices server, using very efficient (permanent, secured) WebSocket connections to other QEWD servers using [JWT](https://jwt.io/)'s
+- a [GraphQL](http://graphql.org/) server to write & process your GraphQL queries & mutations
+- an application router to orchestrate all your different application endpoint(s)/handler(s)
+- a master/worker multi-process queue architecture, high-performance and very scalable
+- session management/cache allowing you to write stateful applications
+- response customization: combine responses from different servers, return responses in different formats, intercept an re-route requests, ...
+- database independence: use the [InterSystems Caché unified multi-model database](https://www.intersystems.com/products/cache/), [Redis](https://redis.io/), [GT/M](https://sourceforge.net/projects/fis-gtm/), ... or whatever (No)SQL database technology you like!
+
 Thanks to [Rob Tweed](https://github.com/robtweed) for providing the [qewd-react](https://www.npmjs.com/package/qewd-react) module this interface module code is based on.
 
 ## Installing

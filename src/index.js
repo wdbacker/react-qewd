@@ -45,15 +45,21 @@ export class QEWDProvider extends Component {
     this.state = { registered: false }
   }
 
-  // when EWDProvider is instantiated by React, we can add a 'ewd-registered' event handler which sets the EWDProvider state to registered
+  // when QEWDProvider is instantiated by React, we can add a 'ewd-registered' event handler which sets the EWDProvider state to registered
   // and starts the ewd-client using the rcStart() method
   componentDidMount() {
     let component = this;
     this.qewd.on('ewd-registered', function() {
       component.setState({ registered: true });
     });
+    this.qewd.on('ewd-reregistered', function() {
+      component.setState({ registered: true });
+    });
+    this.qewd.on('socketDisconnected', function() {
+      component.setState({ registered: false });
+    });
     if (this.qewd.log) console.log('starting QEWD ...');
-    this.qewd.rcStart();
+    this.qewd.rstart();
   }
 
   // pass the ewd client object as property to all child components
@@ -73,7 +79,7 @@ export function QEWD(params) {
   let io;
   if (!params.no_sockets) io = require('socket.io-client');
   let $;
-  if (!params.ajax) $ = require('jquery');
+  if (params.use_jquery && !params.ajax) $ = require('jquery');
 
   // set up start parameters for ewd-client
   let QEWD = ewdClient.EWD;
@@ -91,6 +97,7 @@ export function QEWD(params) {
   QEWD.rcStart = function() {
     QEWD.start(application);
   };
+  QEWD.rstart = QEWD.rcStart;
 
   // return the ewd client instance for use in the Redux createStore() method
   return QEWD;

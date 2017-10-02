@@ -1,7 +1,7 @@
 {
   "name": "react-qewd",
-  "version": "1.0.5",
-  "description": "React/Redux client module for QEWD",
+  "version": "1.0.6",
+  "description": "React/Redux WebSocket client for QEWD",
   "main": "lib/index.js",
   "jsnext:main": "es/index.js",
   "files": [
