@@ -13,7 +13,7 @@ A similar module [vue-qewd](https://www.npmjs.com/package/vue-qewd) for [Vue.js]
 - a master/worker multi-process queue architecture, high-performance and very scalable
 - session management/cache allowing you to write stateful applications
 - response customization: combine responses from different servers, return responses in different formats, intercept an re-route requests, ...
-- database independence: use the [InterSystems Caché unified multi-model database](https://www.intersystems.com/products/cache/), [Redis](https://redis.io/), [GT/M](https://sourceforge.net/projects/fis-gtm/), ... or whatever (No)SQL database technology you like!
+- built-in JSON database abstraction: make your application data persistent using the [InterSystems Caché multi-model database](https://www.intersystems.com/products/cache/) or the [InterSystems IRIS Data platform](https://www.intersystems.com/products/intersystems-iris/) (unified data access as a document/NoSQL store or using SQL or objects), [Redis](https://redis.io/), [YottaDB](https://yottadb.com), ...
 
 Thanks to [Rob Tweed](https://github.com/robtweed) for providing the [qewd-react](https://www.npmjs.com/package/qewd-react) module this interface module code is based on.
 
