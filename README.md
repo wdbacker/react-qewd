@@ -1,10 +1,10 @@
-# react-qewd: React/Redux client module for [QEWD](https://www.npmjs.com/package/qewd)
+# react-qewd: React/Redux client module for [QEWD.js](https://www.npmjs.com/package/qewd)
 
-Interface module for writing [React](https://www.npmjs.com/package/react) applications with [qewd (QEWD)](https://www.npmjs.com/package/qewd) back-end. Exposes the [ewd-client](https://www.npmjs.com/package/ewd-client) as object, in React context and as property for use in your React components.
+Interface module for writing [React](https://www.npmjs.com/package/react) applications with [qewd (QEWD.js)](https://www.npmjs.com/package/qewd) back-end. Exposes the [ewd-client](https://www.npmjs.com/package/ewd-client) as object, in React context and as property for use in your React components.
 
-A similar module [vue-qewd](https://www.npmjs.com/package/vue-qewd) for [Vue.js](https://vuejs.org/) exists.
+A similar module [vue-qewd](https://www.npmjs.com/package/vue-qewd) exists for [Vue.js](https://vuejs.org/).
 
-[QEWD](http://qewdjs.com/) is a unique web framework allowing you to concentrate on your application code, without worrying about system infrastructure, featuring:
+[QEWD.js](http://qewdjs.com/) is a unique web framework allowing you to concentrate on your application code, without worrying about system infrastructure, featuring:
 - a WebSockets server, allowing your application to connect via this `vue-qewd` module using [ewd-client](https://www.npmjs.com/package/ewd-client)
 - a (federating) REST server, to build your REST endpoints & allowing you to federate requests to other (chained) QEWD servers, featuring [Express](https://expressjs.com/) or [Koa](http://koajs.com/) as underlying frameworks
 - a microservices server, using very efficient (permanent, secured) WebSocket connections to other QEWD servers using [JWT](https://jwt.io/)'s
@@ -21,7 +21,102 @@ Thanks to [Rob Tweed](https://github.com/robtweed) for providing the [qewd-react
 
     npm install react-qewd
 
-## Use
+### Version 2: breaking changes!
+
+From version 2.0.0 onwards, the [socket.io-client](https://www.npmjs.com/package/jquery) and [jQuery](https://www.npmjs.com/package/jquery) module dependencies for the underlying [ewd-client](https://www.npmjs.com/package/ewd-client) need to be passed in as parameters when instantiating QEWD:
+
+```javascript
+import io from 'socket.io-client'
+import $ from 'jquery'
+
+let qewd = QEWD({
+  application: 'qewd-test-app', // application name
+  log: true,
+  url: 'http://localhost:8080',
+  io,
+  $
+})
+```
+Overview of parameter changes in 2.0.0 and up:
+- ```io``` was added: required for WebSocket communication mode, import it as above or as 
+```javascript
+var io = require('socket.io-client')
+```
+- ```$``` was added: required for Ajax communication mode using the [jQuery](https://www.npmjs.com/package/jquery) ajax method, import it as above or as
+```javascript
+var $ = require('jquery')
+```
+- ```ajax``` remains the same: required for Ajax communication mode, using you own custom Ajax module, e.g. with axios
+```javascript
+import io from 'socket.io-client'
+// import $ from 'jquery'
+import axios from 'axios'
+
+var qewd = QEWD({
+  application: 'qewd-test-app', // application name
+  log: true,
+  url: 'http://localhost:8080',
+  io,
+  ajax: function (params, success, fail) {
+    let data = JSON.stringify(params.data)
+    axios({
+      url: params.url,
+      method: 'post',
+      headers: {
+        'Content-Type': params.contentType
+      },
+      data,
+      timeout: params.timeout
+    })
+      .then(function (response) {
+        success(response.data)
+      })
+      .catch(function (error) {
+        if (error.response) {
+          success(error.response.data)
+        } else {
+          fail(error.message || 'unknown ajax error')
+        }
+      })
+  }
+})
+```
+- for mixed WebSocket & Ajax communication mode, you need both parameters (io and $ || ajax)
+- ```no_sockets``` parameter was removed
+- ```use_jquery``` parameter was removed
+
+This allows you to control which modules you need and avoids [Webpack](https://webpack.js.org/) dependency detection issues.
+
+## Options
+
+  Options you can pass to the `QEWD({ ... })` instance (see examples) with  their default values and a short description:
+
+    {
+      // application module name
+      application: 'unknown',
+      // socket.io-client module (optional, required for WebSockets communication)
+      io: undefined,
+      // jquery module (optional, required for Ajax communication using jQuery's $.ajax)
+      $: undefined,
+      // specify your own Ajax request handler function, see example above (optional)
+      ajax: null,
+      // url of QEWD.js server, in the form 'http(s)://<host>:<port>'
+      url: null,
+      // runtime mode for ewd-client (optional)
+      mode: 'development',
+      // log each QEWD message sent & received on console (optional)
+      log: true,
+      // specify custom cookie name to restart the current WebSockets session between page refreshes (optional)
+      cookieName: 'ewdSession',
+      // use JWT's for sessions (optional)
+      jwt: false,
+      // decode JWT's in the client (optional)
+      jwt_decode: false
+    }
+
+You'll find further details about these options in the [QEWD.js training course](http://docs.qewdjs.com/qewd_training.html).
+
+## Use with [React](https://reactjs.org/)
 
 With [React](https://www.npmjs.com/package/react) components and/or [Redux](https://www.npmjs.com/package/redux) and [Redux Thunk middleware](https://www.npmjs.com/package/redux-thunk), you can start from this example in your source code (just create a standard create-react-app template first).
 
@@ -37,6 +132,7 @@ import { render } from 'react-dom';
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
+import io from 'socket.io-client'
 import { QEWD, QEWDProvider } from 'react-qewd';
 import App from 'components/App';
 import Spinner from 'react-spinner';
@@ -49,7 +145,8 @@ import 'bootstrap/dist/css/bootstrap-theme.css';
 let qewd = QEWD({
   application: 'qewd-test-app', // application name
   log: true,
-  url: 'http://localhost:8080'
+  url: 'http://localhost:8080',
+  io
 });
 
 // we instantiate this object to pass the EWD 3 client to the Redux action methods in actions/*.js
@@ -276,7 +373,7 @@ export default combineReducers({
 
 Next, create styling in styles/app.scss:
 
-```javascript
+```css
 @import 'base';
 @import 'react-spinner';
 @import url('http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css');
@@ -285,7 +382,7 @@ Next, create styling in styles/app.scss:
 
 Next, create styling in styles/_base.scss:
 
-```javascript
+```css
 body {
   background-color: rgb(252, 252, 252) !important;
 }
@@ -293,7 +390,7 @@ body {
 
 Next, create styling in styles/_react-spinner.scss:
 
-```javascript
+```css
 .react-spinner {
   position: relative;
   width: 32px;
@@ -333,7 +430,7 @@ Next, create styling in styles/_react-spinner.scss:
 
 Next, add styling in App.css:
 
-```javascript
+```css
 .App {
   text-align: center;
 }
@@ -362,7 +459,7 @@ Next, add styling in App.css:
 
 Next, add styling in index.css:
 
-```javascript
+```css
 body {
   margin: 0;
   padding: 0;
@@ -377,7 +474,7 @@ Finally, start the test application:
 
 ## License
 
- Copyright (c) 2017 Stabe nv,  
+ Copyright (c) 2019 Stabe nv,  
  Hofstade, Oost-Vlaanderen, BE  
  All rights reserved
 

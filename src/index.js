@@ -3,7 +3,7 @@
  ----------------------------------------------------------------------------
  | react-ewd: React/Redux client module for ewd-xpress                      |
  |                                                                          |
- | Copyright (c) 2017 Stabe nv,                                             |
+ | Copyright (c) 2019 Stabe nv,                                             |
  | Hofstade, Oost-Vlaanderen,                                               |
  | All rights reserved.                                                     |
  |                                                                          |
@@ -20,9 +20,12 @@
  |  limitations under the License.                                          |
  ----------------------------------------------------------------------------
 
-  19 April 2017
+  11 January 2019
 
 */
+
+/* eslint-disable comma-dangle */
+/* eslint-disable func-names */
 
 import { Component, cloneElement } from 'react';
 import PropTypes from 'prop-types';
@@ -46,9 +49,9 @@ export class QEWDProvider extends Component {
   }
 
   // when QEWDProvider is instantiated by React, we can add a 'ewd-registered' event handler which sets the EWDProvider state to registered
-  // and starts the ewd-client using the rcStart() method
+  // and starts the ewd-client using the reactStart() method
   componentDidMount() {
-    let component = this;
+    const component = this;
     this.qewd.on('ewd-registered', function() {
       component.setState({ registered: true });
     });
@@ -59,7 +62,7 @@ export class QEWDProvider extends Component {
       component.setState({ registered: false });
     });
     if (this.qewd.log) console.log('starting QEWD ...');
-    this.qewd.rstart();
+    this.qewd.reactStart();
   }
 
   // pass the ewd client object as property to all child components
@@ -76,29 +79,40 @@ QEWDProvider.childContextTypes = {
 
 // instantiation function to use ewd-client with Redux store & thunk middleware, allows async actions
 export function QEWD(params) {
-  let io;
-  if (!params.no_sockets) io = require('socket.io-client');
-  let $;
-  if (params.use_jquery && !params.ajax) $ = require('jquery');
-
   // set up start parameters for ewd-client
-  let QEWD = ewdClient.EWD;
-  let application = {
+  const EWD = ewdClient.EWD;
+  const application = {
     application: params.application || 'unknown',
-    io: io,
-    $: $,
+    io: params.io,
+    $: params.$,
     ajax: params.ajax || null,
     url: params.url || null,
     mode: params.mode || 'development',
     log: params.log || true,
+    cookieName: params.cookieName || 'ewdSession',
+    jwt: params.jwt || false,
+    jwt_decode: params.jwt_decode || false
   };
 
   // custom start method for use with React Components
-  QEWD.rcStart = function() {
-    QEWD.start(application);
+  EWD.rstart = EWD.rcStart = EWD.reactStart = function() {
+    EWD.start(application);
   };
-  QEWD.rstart = QEWD.rcStart;
+
+  let registrationCallback = null;
+  EWD.reactRegistrationCallback = function(callback) {
+    registrationCallback = callback;
+  };
+  EWD.on('ewd-registered', function() {
+    if (registrationCallback) { registrationCallback(true, 'ewd-registered'); }
+  });
+  EWD.on('ewd-reregistered', function() {
+    if (registrationCallback) { registrationCallback(true, 'ewd-reregistered'); }
+  });
+  EWD.on('socketDisconnected', function() {
+    if (registrationCallback) { registrationCallback(false, 'socketDisconnected'); }
+  });
 
   // return the ewd client instance for use in the Redux createStore() method
-  return QEWD;
+  return EWD;
 }
